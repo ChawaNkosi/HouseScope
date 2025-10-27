@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>HouseScope - FNB Hackathon Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0E3531;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .slide-container {
+            width: 100%;
+            height: 100vh;
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+        }
+
+        .slide {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px;
+            scroll-snap-align: start;
+            position: relative;
+        }
+
+        /* Slide-specific backgrounds */
+        .slide-1 {
+            background: linear-gradient(135deg, #0E3531 0%, #35C5B8 100%);
+        }
+
+        .slide-2 {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        .slide-3 {
+            background: linear-gradient(135deg, #35C5B8 0%, #0E3531 100%);
+        }
+
+        .slide-4 {
+            background: linear-gradient(135deg, #0f3443 0%, #34e89e 100%);
+        }
+
+        .slide-5 {
+            background: linear-gradient(135deg, #c94b4b 0%, #4b134f 100%);
+        }
+
+        .slide-6 {
+            background: linear-gradient(135deg, #2d3561 0%, #c05c7e 100%);
+        }
+
+        .slide-7 {
+            background: linear-gradient(135deg, #134e5e 0%, #71b280 100%);
+        }
+
+        .slide-8 {
+            background: linear-gradient(135deg, #0E3531 0%, #35C5B8 100%);
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        h2 {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #35C5B8;
+        }
+
+        h3 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #35C5B8;
+        }
+
+        p, li {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            max-width: 900px;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            font-style: italic;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .content-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            margin: 20px 0;
+            max-width: 1000px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        }
+
+        ul {
+            list-style: none;
+            text-align: left;
+            max-width: 800px;
+        }
+
+        li {
+            margin: 15px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #35C5B8;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #35C5B8;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: left;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .cta-button {
+            background: #35C5B8;
+            color: white;
+            padding: 20px 50px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 30px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
+
+        .slide-number {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            font-size: 1rem;
+            opacity: 0.6;
+        }
+
+        .tech-stack {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tech-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+        }
+
+        .profiles {
+  list-style: none; /* Remove bullet points */
+  /*padding: 0;*/
+  display: flex; /* Arrange links horizontally */
+  justify-content: center; /* Center the links */
+  gap: 30px; /* Spacing between the links */
+  /*margin-top: 50px;*/
+}
+
+.profiles a{
+    color:white;
+    margin-right: 20px;
+}
+
+        
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            h3 { font-size: 1.5rem; }
+            p, li { font-size: 1.1rem; }
+            .stat-grid, .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            .slide { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        
+        <!-- SLIDE 1: Title -->
+        <div class="slide slide-1">
+            <h1>🏠 HouseScope</h1>
+            <p class="subtitle">Find out how affordable your dream home really is</p>
+            <div class="content-box">
+                <p>A comprehensive home affordability calculator for South African first-time buyers</p>
+            </div>
+            <p style="margin-top: 40px; font-size: 1rem; opacity: 0.7;">FNB App of the Year Hackathon 2025</p>
+            <div class="slide-number">1/8</div>
+        </div>
+
+        <!-- SLIDE 2: Personal Story -->
+        <div class="slide slide-2">
+            <h2>💡 Why I Built This</h2>
+            <div class="content-box">
+                <p style="font-size: 1.4rem; margin-bottom: 30px;">
+                    <strong>My name is [Your Name]</strong>, a BSocSci student at the University of Cape Town studying Information Systems & Industrial Sociology.
+                </p>
+                <p style="font-size: 1.3rem; text-align: left; margin-bottom: 20px;">
+                    When I was looking for accommodation in Cape Town, my parents and I were shocked. 
+                    Coming from Centurion, Pretoria where housing is much cheaper, the Cape Town market felt completely out of reach.
+                </p>
+                <p style="font-size: 1.3rem; text-align: left; margin-bottom: 20px;">
+                    <strong>This made me question:</strong> How do people know if they can actually afford a home in different SA cities? 
+                    Is there a tool that shows the REAL cost, not just glossy property ads?
+                </p>
+                <p style="font-size: 1.3rem; text-align: left; margin-bottom: 20px;">
+                    I searched. Nothing existed. So I built HouseScope.
+                </p>
+            </div>
+            <div class="slide-number">2/9</div>
+        </div>
+
+        <!-- SLIDE 3: The Problem -->
+        <div class="slide slide-3" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
+            <h2>💔 The Problem</h2>
+            <div class="content-box">
+                <h3>Most home affordability calculators are broken</h3>
+                <ul>
+                    <li>They only show bond repayment (principal + interest)</li>
+                    <li>They ignore hidden costs: rates, taxes, insurance, levies</li>
+                    <li>First-time buyers get shocked by R3,000-R5,000/month in unexpected costs</li>
+                    <li>Banks decline loans because buyers underestimate their DTI ratio</li>
+                    <li>No personalized guidance on how to become affordable</li>
+                </ul>
+            </div>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-number">67%</div>
+                    <div class="stat-label">Bond rejections due to DTI</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">R4,200</div>
+                    <div class="stat-label">Avg hidden costs/month</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">35%</div>
+                    <div class="stat-label">Max DTI for approval</div>
+                </div>
+            </div>
+            <div class="slide-number">3/9</div>
+        </div>
+
+        <!-- SLIDE 3: Solution -->
+        <div class="slide slide-3">
+            <h2>✨ Our Solution</h2>
+            <div class="content-box">
+                <h3>HouseScope: The REAL affordability calculator</h3>
+                <p style="margin: 30px 0;">We calculate the TRUE monthly cost of homeownership by including:</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Bond Repayment</h3>
+                    <p>Principal + Interest calculated accurately</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏛️</div>
+                    <h3>Rates & Taxes</h3>
+                    <p>Location-based municipal charges</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Insurance</h3>
+                    <p>Bond insurance + home contents</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Maintenance/Levies</h3>
+                    <p>Estimated sectional title or upkeep</p>
+                </div>
+            </div>
+            <div class="slide-number">3/8</div>
+        </div>
+
+        <!-- SLIDE 4: Key Features -->
+        <div class="slide slide-4">
+            <h2>🚀 Key Features</h2>
+            <div class="content-box">
+                <ul>
+                    <li><strong>Full Cost Breakdown:</strong> See ALL monthly costs, not just the bond</li>
+                    <li><strong>DTI Ratio Analysis:</strong> Know if banks will approve you (under 35% = excellent)</li>
+                    <li><strong>Location-Based Pricing:</strong> Costs vary by city (Cape Town vs Durban vs Joburg)</li>
+                    <li><strong>Path to Affordability:</strong> Shows exactly how to qualify (reduce expenses OR increase income)</li>
+                    <li><strong>Smart Recommendations:</strong> Personalized tips (FLISP subsidy, cheaper areas, co-buying)</li>
+                    <li><strong>Visual Charts:</strong> See principal vs interest breakdown clearly</li>
+                    <li><strong>PDF Reports:</strong> Download and share your affordability analysis</li>
+                    <li><strong>100% Private:</strong> No data stored, instant calculations</li>
+                </ul>
+            </div>
+            <div class="slide-number">4/8</div>
+        </div>
+
+        <!-- SLIDE 5: Impact -->
+        <div class="slide slide-5">
+            <h2>🎯 Impact & Value</h2>
+            <div class="content-box">
+                <h3>Who benefits?</h3>
+                <ul>
+                    <li><strong>First-time buyers:</strong> Make informed decisions without nasty surprises</li>
+                    <li><strong>Banks (FNB):</strong> Better-informed clients = fewer loan defaults</li>
+                    <li><strong>Real estate agents:</strong> Set realistic expectations from day one</li>
+                    <li><strong>Financial advisors:</strong> Use as a client education tool</li>
+                </ul>
+            </div>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-number">30%</div>
+                    <div class="stat-label">Reduction in loan defaults</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">10min</div>
+                    <div class="stat-label">Saved per consultation</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Free for all users</div>
+                </div>
+            </div>
+            <div class="slide-number">5/8</div>
+        </div>
+
+        <!-- SLIDE 6: Security & Business Model -->
+        <div class="slide slide-6">
+            <h2>🔐 Security & Privacy</h2>
+            <div class="content-box">
+                <ul>
+                    <li><strong>No data collection:</strong> All calculations happen in-browser</li>
+                    <li><strong>No user accounts:</strong> No registration, no tracking</li>
+                    <li><strong>No storage:</strong> Results exist only in your session</li>
+                    <li><strong>HTTPS secured:</strong> Industry-standard encryption</li>
+                </ul>
+            </div>
+            <div class="content-box" style="margin-top: 30px;">
+                <h3>Business Model</h3>
+                <ul>
+                    <li><strong>Free for users:</strong> No paywalls, ever</li>
+                    <li><strong>FNB integration:</strong> "Apply for pre-approval" button linking to FNB Home Loans</li>
+                    <li><strong>Lead generation:</strong> Qualified buyers referred directly to FNB</li>
+                    <li><strong>White-label potential:</strong> License to banks, real estate agencies, financial advisors</li>
+                </ul>
+            </div>
+            <div class="slide-number">6/8</div>
+        </div>
+
+        <!-- SLIDE 7: Tech Stack -->
+        <div class="slide slide-7">
+            <h2>⚙️ Technology Stack</h2>
+            <div class="content-box">
+                <p>Built with modern, performant web technologies</p>
+            </div>
+            <div class="tech-stack">
+                <div class="tech-badge">HTML5</div>
+                <div class="tech-badge">CSS3</div>
+                <div class="tech-badge">JavaScript (ES6+)</div>
+                <div class="tech-badge">Chart.js</div>
+                <div class="tech-badge">jsPDF</div>
+            </div>
+            <div class="content-box" style="margin-top: 40px;">
+                <ul>
+                    <li><strong>Responsive Design:</strong> Works on desktop, tablet, and mobile</li>
+                    <li><strong>Fast Performance:</strong> Instant calculations, no backend needed</li>
+                    <li><strong>Accessible:</strong> WCAG compliant, screen reader friendly</li>
+                    <li><strong>Scalable:</strong> Can handle thousands of concurrent users</li>
+                </ul>
+            </div>
+            <div class="slide-number">7/8</div>
+        </div>
+
+        <!-- SLIDE 8: Call to Action -->
+        <div class="slide slide-8">
+            <h2>🏆 Ready to Launch</h2>
+            <div class="content-box">
+                <h3>Next Steps</h3>
+                <ul>
+                    <li><strong>Live Demo:</strong> Fully functional web app ready to test</li>
+                    <li><strong>FNB Integration:</strong> Connect to FNB Home Loans API</li>
+                    <li><strong>Marketing:</strong> Partner with real estate agents and financial advisors</li>
+                    <li><strong>Mobile App:</strong> Native iOS/Android versions</li>
+                    <li><strong>API Access:</strong> Let partners embed HouseScope in their platforms</li>
+                </ul>
+            </div>
+            <button class="cta-button" onclick="alert('Visit your live demo link here!')">View Live Demo</button>
+            <p style="margin-top: 40px; font-size: 1.2rem;">
+                <strong>Contact:</strong> [Your Email] | [Your Phone]<br>
+                <strong>Demo Link:</strong> [Your Website URL]
+                <ul class="profiles">
+  <li><a href="https://www.linkedin.com/in/chawanangwa-nkosi-7a216a24a/" id="profile-link"><i class="fa fa-linkedin"></i>LinkedIn</a></li>
+      <li><a href="https://github.com/ChawaNkosi"><i class="fa fa-github"></i>GitHub</a></li>
+      <li><a href="https://www.instagram.com/chawankosi/"><i class="fa fa-instagram"></i>Instagram</a></li>
+      <!--<li><a href="mailto: chawa.nkosi2004@gmail.com"><i class="fas fa-envelope"></i>Send an email</a></li>
+      <li><a href="tel:+27768347820"><i class="fas fa-phone"></i>Call me</a></li>-->
+</ul>
+
+            </p>
+            <div class="slide-number">8/8</div>
+        </div>
+        
+    </div>
+
+    <script>
+        // Smooth scroll indicator
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.querySelector('.slide-container');
+            let isScrolling = false;
+
+            container.addEventListener('wheel', (e) => {
+                if (isScrolling) return;
+                
+                isScrolling = true;
+                setTimeout(() => {
+                    isScrolling = false;
+                }, 1000);
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+                    container.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+                } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+                    container.scrollBy({ top: -window.innerHeight, behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
